@@ -276,16 +276,20 @@
       successMsg.style.display = "none";
       errorMsg.style.display = "none";
 
-      const formData = new FormData(form);
+     const data = {
+    to: form.to.value,
+    subject: form.subject.value,
+    content: form.content.value
+};
 
-      try {
-        const response = await fetch(
-          "https://antz.app.n8n.cloud/webhook/Send-Email",
-          {
-            method: "POST",
-            body: formData
-          }
-        );
+try {
+    const response = await fetch("https://antz.app.n8n.cloud/webhook/Send-Email", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data) // Send as JSON string
+    });
 
         if (response.ok) {
           form.reset();
@@ -304,3 +308,4 @@
 </body>
 
 </html>
+
